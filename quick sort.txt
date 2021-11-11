@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int _partition(int low, int high, vector<int>& arr){
+    int pivot = arr[high];
+    int i = low;
+    int j;
+    for(j=low;j<=high-1;j++){
+        if(arr[j]<pivot){
+            swap(arr[j],arr[i]);
+            i++;
+        }
+    }
+    swap(arr[i],arr[high]);
+    return i;
+}
+
+void _sort(int low, int high, vector<int>& arr){
+    if(low<high){
+        int p = _partition(low,high,arr);
+        _sort(low,p-1,arr);
+        _sort(p+1,high,arr);
+
+    }
+}
+
+int main(){
+    int arr[12] = {144,255,222,333,11,2,3,4,0,5,6,7};
+    vector<int> arr2(arr,arr+12);
+    _sort(0,11, arr2);
+
+    for(int i = 0 ; i < 12 ; i++)
+        cout << arr2[i] << " ";
+
+    return 0;
+}

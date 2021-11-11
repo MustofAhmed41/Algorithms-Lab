@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int input[] = {15,15,15,1,2,3,4,5,9,0,0,0,11,12};
+
+int main(){
+    int n;
+    int max=-1;
+    for(int i = 0 ; i < sizeof(input)/sizeof(int);i++){
+        if(input[i]>max)
+            max = input[i];
+    }
+
+    vector<int> counted(max+1); // arr is for number of elements counted array
+    vector<int> cumulative_sum(max+1);
+    vector<int> answer(sizeof(input)/sizeof(int) + 1);
+
+    for(int i=0;i< sizeof(input)/sizeof(int);i++){
+        counted[input[i]]++;
+    }
+    cumulative_sum[0] = counted[0];
+    for(int i = 1 ; i<= max ;i++){
+        cumulative_sum[i] = cumulative_sum[i-1] + counted[i];
+    }
+
+    for(int i = sizeof(input)/sizeof(int)-1 ; i >= 0;i--){
+        answer[cumulative_sum[input[i]]] = input[i];
+        cumulative_sum[input[i]]--;
+    }
+
+    for(int i = 1 ; i <= sizeof(input)/sizeof(int); i++)
+        cout << answer[i] << " ";
+
+
+    return 0;
+}
